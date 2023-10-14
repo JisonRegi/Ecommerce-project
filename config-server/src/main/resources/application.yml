@@ -1,0 +1,18 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: CONGIG-SERVER
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${git.uri}
+          password: ${git.password}
+          username: ${git.username}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+          
