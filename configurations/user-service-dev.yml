@@ -1,8 +1,4 @@
-server:
-  port: 8001
 spring:
-  application:
-    name: USER-SERVICE
   datasource:
     url: jdbc:postgresql://localhost:5432/userdbDev
     username: ${db.username}

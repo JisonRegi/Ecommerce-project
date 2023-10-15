@@ -1,4 +1,4 @@
-package com.userservice.exception;
+package com.inventoryservice.exception;
 
 import java.time.LocalDateTime;
 

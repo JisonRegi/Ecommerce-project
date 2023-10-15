@@ -1,10 +1,10 @@
 server:
-  port: 8001
+  port: 8002
 spring:
   application:
-    name: USER-SERVICE
+    name: INVENTORY-SERVICE
   profiles:
-    active: dev
+    active: dev   
   config:
     import:
     - configserver:http://localhost:8888

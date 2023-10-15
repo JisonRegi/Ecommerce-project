@@ -12,6 +12,7 @@ import com.userservice.repository.UserRepository;
 import com.userservice.service.UserService;
 import com.userservice.util.Constants;
 import com.userservice.util.ModelCoverter;
+import com.userservice.util.UserRole;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService {
 		if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
 			throw new ResourceExistsException(Constants.USER_EXISTS);
 		}
+		userRequest.setRole(UserRole.USER);
 		User user = userRepository.save(convertor.convert(userRequest, User.class));
 		return convertor.convert(user, UserResponseDTO.class);
 	}
