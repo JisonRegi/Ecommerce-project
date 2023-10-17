@@ -1,13 +1,15 @@
-package com.userservice.exception;
+package com.orderservice.dto;
 
 import java.time.LocalDateTime;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class ErrorResponse {
+@Builder
+public class ErrorResponseDTO {
 	private String errorMessage;
-	private String errorDetails;
 	private String errorCode;
+	private int status;
 	private LocalDateTime timestamp;
 }

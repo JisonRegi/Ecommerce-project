@@ -1,0 +1,40 @@
+server:
+  port: 8003
+spring:
+  application:
+    name: ORDER-SERVICE
+  profiles:
+    active: dev   
+  config:
+    import:
+    - configserver:${CONFIG_SERVER:http://localhost}:8888 
+  kafka:
+    producer:
+      bootstrap-servers:
+      - ${KAFKA_SERVER:localhost}:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: ordersgroup
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            value:
+              default:
+                type: com.orderservice.dto.OrderResponseDTO
+            use:
+              type:
+                headers: false
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://localhost}:8761/eureka/
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_SERVER:http://localhost}:9411/api/v2/spans

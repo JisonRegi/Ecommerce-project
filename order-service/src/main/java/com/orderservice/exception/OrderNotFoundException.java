@@ -1,22 +1,21 @@
-package com.userservice.exception;
+package com.orderservice.exception;
 
-public class ResourceExistsException extends RuntimeException{
+public class OrderNotFoundException extends RuntimeException{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ResourceExistsException() {
+	public OrderNotFoundException() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResourceExistsException(String message) {
+	public OrderNotFoundException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 
 }

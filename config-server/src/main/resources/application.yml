@@ -2,7 +2,7 @@ server:
   port: 8888
 spring:
   application:
-    name: CONGIG-SERVER
+    name: CONFIG-SERVER
   cloud:
     config:
       server:
@@ -18,5 +18,5 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_SERVER:http://localhost}:8761/eureka/
           
