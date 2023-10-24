@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  DB_SERVER: "postgres-service"
+  KAFKA_SERVER: "kafka-service"
+  ZIPKIN_SERVER: "zipkin-service"
+  POSTGRES_USER: "postgres"

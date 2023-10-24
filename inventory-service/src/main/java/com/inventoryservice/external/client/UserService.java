@@ -12,8 +12,8 @@ import com.inventoryservice.external.decoder.CustomErrorDecoder;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
-@CircuitBreaker(name = "external", fallbackMethod = "fallback")
-@FeignClient(name = "USER-SERVICE", configuration = CustomErrorDecoder.class)
+//@CircuitBreaker(name = "external", fallbackMethod = "fallback")
+@FeignClient(name = "user-service-svc")
 public interface UserService {
 
 	@GetMapping("users/{email}")

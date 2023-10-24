@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service-app
+  template:
+    metadata:
+      labels:
+        app: user-service-app
+    spec:
+      containers:
+      - name: user-service-app
+        image: jison06/user-service
+        ports:
+        - containerPort: 8001
+        env:
+        - name: DB_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_SERVER
+        - name: KAFKA_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: KAFKA_SERVER
+        - name: ZIPKIN_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: ZIPKIN_SERVER
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: POSTGRES_PASSWORD
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-service-app
+  ports:
+  - protocol: TCP
+    port: 8001
+    targetPort: 8001

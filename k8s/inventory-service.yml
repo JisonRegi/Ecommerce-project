@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-service-app
+  template:
+    metadata:
+      labels:
+        app: inventory-service-app
+    spec:
+      containers:
+      - name: inventory-service-app
+        image: jison06/inventory-service
+        ports:
+        - containerPort: 8002
+        env:
+        - name: DB_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_SERVER
+        - name: KAFKA_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: KAFKA_SERVER
+        - name: ZIPKIN_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: ZIPKIN_SERVER
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: POSTGRES_PASSWORD
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-service
+spec:
+  selector:
+    app: inventory-service-app
+  ports:
+  - protocol: TCP
+    port: 8002
+    targetPort: 8002

@@ -1,7 +1,7 @@
 package com.userservice.service.impl;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.kafka.core.KafkaTemplate;
+//import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.userservice.dto.UserEventDTO;
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
 	private final ModelCoverter convertor;
 	private final UserRepository userRepository;
-	private final KafkaTemplate<String, UserEventDTO> kafkaTemplate;
+	//private final KafkaTemplate<String, UserEventDTO> kafkaTemplate;
 
 	@Override
 	public UserResponseDTO getUserByEmail(String email) {
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 		}
 		userRequest.setRole(UserRole.USER);
 		User user = userRepository.save(convertor.convert(userRequest, User.class));
-		sendNotificationEvent(user.getEmail());
+		//sendNotificationEvent(user.getEmail());
 		return convertor.convert(user, UserResponseDTO.class);
 	}
 
@@ -73,10 +73,10 @@ public class UserServiceImpl implements UserService {
 				HttpStatus.NOT_FOUND.toString(), HttpStatus.NOT_FOUND.value()));
 	}
 
-	private void sendNotificationEvent(String email) {
+	/*private void sendNotificationEvent(String email) {
 		UserEventDTO userEvent = new UserEventDTO();
 		userEvent.setEmail(email);
 		kafkaTemplate.send(Constants.USER_CREATED_EVENT, userEvent);
-	}
+	}*/
 
 }

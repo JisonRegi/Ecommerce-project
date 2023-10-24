@@ -9,22 +9,18 @@ spring:
         locator:
           enabled: true
       routes:
-      - id : USER-SERVICE
-        uri: lb://USER-SERVICE
+      - id : user-service
+        uri: lb://user-service
         predicates:
         - Path=/users/**
-      - id : INVENTORY-SERVICE
-        uri: lb://INVENTORY-SERVICE
+      - id : inventory-service
+        uri: lb://inventory-service
         predicates:
         - Path=/inventory/**
-      - id : ORDER-SERVICE
-        uri: lb://ORDER-SERVICE
+      - id : order-service
+        uri: lb://order-service
         predicates:
         - Path=/orders/**
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_SERVER:http://localhost}:8761/eureka/
 management:
   tracing:
     sampling:
