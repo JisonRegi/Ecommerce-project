@@ -12,14 +12,17 @@ import com.inventoryservice.external.decoder.CustomErrorDecoder;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
-//@CircuitBreaker(name = "external", fallbackMethod = "fallback")
-@FeignClient(name = "user-service-svc")
+@FeignClient(name = "user-service",  url = "user-service:8001")
 public interface UserService {
 
+	@CircuitBreaker(name = "external", fallbackMethod = "fallback")
 	@GetMapping("users/{email}")
 	public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email);
 
-	default public ResponseEntity<UserResponseDTO> fallback(Throwable ex) {
+	default public ResponseEntity<UserResponseDTO> fallback(Exception ex) {
+		if (ex instanceof CustomException custom) {
+			throw new CustomException(ex.getMessage(), custom.getErrorCode(), custom.getStatus());
+		}
 		throw new CustomException("User service is not available", HttpStatus.SERVICE_UNAVAILABLE.toString(), 503);
 	}
 
